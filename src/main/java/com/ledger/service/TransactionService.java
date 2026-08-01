@@ -32,6 +32,13 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
+    public List<TransactionResponse> findMyHistory(String username) {
+        return repository.findByOwnerUsernameOrderByCreatedAtDesc(username)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
     public TransactionResponse findById(Long id) {
         Transaction t = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Transaction not found: " + id));

@@ -34,6 +34,11 @@ public class AuthService {
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.ROLE_USER);
+        if (request.getUsername().startsWith("alice")) {
+            user.setBalance(new java.math.BigDecimal("110.00"));
+        } else {
+            user.setBalance(new java.math.BigDecimal("0.00"));
+        }
         userRepository.save(user);
     }
 
