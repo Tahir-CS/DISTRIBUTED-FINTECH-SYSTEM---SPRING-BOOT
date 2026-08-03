@@ -27,6 +27,12 @@ public class TransactionController {
         return service.findAll();
     }
 
+    @GetMapping("/my-history")
+    public List<TransactionResponse> findMyHistory() {
+        String username = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName();
+        return service.findMyHistory(username);
+    }
+
     @GetMapping("/{id}")
     public TransactionResponse findById(@PathVariable Long id) {
         return service.findById(id);

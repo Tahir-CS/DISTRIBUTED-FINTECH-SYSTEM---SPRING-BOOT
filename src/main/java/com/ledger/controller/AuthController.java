@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth") // url for api calling for authentication 
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;

@@ -1,0 +1,18 @@
+config:
+  target: 'http://localhost:8080'
+  phases:
+    - duration: 2 # Run for 2 seconds
+      arrivalRate: 25 # Send 25 requests per second (50 total)
+  
+scenarios:
+  - name: "Simulate massive concurrent transfers"
+    flow:
+      - post:
+          url: "/api/transfers"
+          json:
+            fromUserId: 1
+            toUserId: 2
+            amount: 100.00
+            description: "Stress Test Transfer"
+          headers:
+            Content-Type: "application/json"

@@ -1,0 +1,380 @@
+:root {
+    --azure-blue: #0078d4;
+    --azure-blue-hover: #005a9e;
+    --azure-dark-bg: #181818;
+    --azure-body-bg: #f3f2f1;
+    --azure-panel-bg: #ffffff;
+    --azure-border: #e1dfdd;
+    --azure-text-primary: #323130;
+    --azure-text-secondary: #605e5c;
+    --azure-success: #107c41;
+    --azure-danger: #a80000;
+    --azure-info: #0078d4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background-color: var(--azure-body-bg);
+    color: var(--azure-text-primary);
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+/* Azure Portal Top Navigation Bar */
+.azure-header {
+    background-color: var(--azure-dark-bg);
+    height: 48px;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+}
+
+.azure-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.azure-logo {
+    display: block;
+}
+
+.azure-portal-title {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.azure-divider {
+    color: #484644;
+}
+
+.azure-service-name {
+    color: #c8c6c4;
+    font-weight: 400;
+}
+
+.azure-user-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    font-size: 0.85rem;
+}
+
+.azure-tenant {
+    color: #a19f9d;
+    background: #292929;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-size: 0.75rem;
+}
+
+.azure-avatar {
+    background-color: var(--azure-blue);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+}
+
+/* Azure Breadcrumb Bar */
+.azure-breadcrumbs {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--azure-border);
+    padding: 0.6rem 1.5rem;
+    font-size: 0.82rem;
+    color: var(--azure-text-secondary);
+}
+
+.azure-breadcrumbs span {
+    color: var(--azure-blue);
+    cursor: pointer;
+}
+
+.azure-breadcrumbs strong {
+    color: var(--azure-text-primary);
+}
+
+/* Layout Wrapper */
+.dashboard-wrapper {
+    max-width: 1240px;
+    margin: 1.5rem auto;
+    padding: 0 1.5rem;
+}
+
+/* Account Hero Cards (Azure Blade Metrics) */
+.account-hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.account-hero-card {
+    background-color: var(--azure-panel-bg);
+    border: 1px solid var(--azure-border);
+    border-top: 4px solid var(--azure-blue);
+    border-radius: 2px;
+    padding: 1.5rem 1.75rem;
+    position: relative;
+    box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+}
+
+.account-hero-card.recipient-card {
+    border-top-color: #5c2d91;
+}
+
+.card-status-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+}
+
+.card-status-badge.active {
+    background-color: #dff6dd;
+    color: var(--azure-success);
+}
+
+.card-status-badge.target {
+    background-color: #f3f2f1;
+    color: #5c2d91;
+    border: 1px solid #e1dfdd;
+}
+
+.account-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--azure-text-secondary);
+    letter-spacing: 0.8px;
+}
+
+.account-username {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--azure-text-primary);
+    margin-top: 0.2rem;
+}
+
+.balance-display {
+    margin-top: 1rem;
+}
+
+.balance-label {
+    font-size: 0.78rem;
+    color: var(--azure-text-secondary);
+}
+
+.balance-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--azure-blue);
+    line-height: 1.1;
+    margin-top: 0.1rem;
+}
+
+.recipient-card .balance-amount {
+    color: #5c2d91;
+}
+
+.balance-amount .currency {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--azure-text-secondary);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+/* Azure Blade Panels */
+.panel {
+    background-color: var(--azure-panel-bg);
+    border: 1px solid var(--azure-border);
+    border-radius: 2px;
+    padding: 1.5rem;
+    box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+}
+
+.panel-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--azure-border);
+}
+
+.panel h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--azure-text-primary);
+}
+
+.azure-blade-sub {
+    font-size: 0.78rem;
+    color: var(--azure-text-secondary);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.1rem;
+}
+
+label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: var(--azure-text-primary);
+}
+
+input, select {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #8a8886;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background-color: #ffffff;
+    color: var(--azure-text-primary);
+    transition: border-color 0.15s ease;
+}
+
+input:focus, select:focus {
+    outline: 2px solid var(--azure-blue);
+    outline-offset: -1px;
+}
+
+.azure-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+}
+
+/* Buttons (Microsoft Fluent UI Buttons) */
+.btn-primary {
+    background-color: var(--azure-blue);
+    color: #ffffff;
+    border: 1px solid var(--azure-blue);
+    border-radius: 2px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.15s;
+}
+
+.btn-primary:hover {
+    background-color: var(--azure-blue-hover);
+    border-color: var(--azure-blue-hover);
+}
+
+.btn-secondary-attack {
+    background-color: #fdf2f2;
+    color: var(--azure-danger);
+    border: 1px solid #f8b4b4;
+    border-radius: 2px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.15s;
+}
+
+.btn-secondary-attack:hover {
+    background-color: #fde8e8;
+    border-color: var(--azure-danger);
+}
+
+/* Metrics */
+.metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.metric-card {
+    background-color: #faf9f8;
+    border: 1px solid var(--azure-border);
+    border-radius: 2px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.metric-title {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--azure-text-secondary);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.metric-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 0.2rem;
+}
+
+.success-text { color: var(--azure-success); }
+.danger-text { color: var(--azure-danger); }
+
+/* Logs */
+.log-container {
+    height: 230px;
+    overflow-y: auto;
+    border: 1px solid var(--azure-border);
+    border-radius: 2px;
+    background-color: #faf9f8;
+    padding: 0.75rem;
+}
+
+.log-container h3 {
+    font-size: 0.78rem;
+    color: var(--azure-text-secondary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.log-list {
+    list-style: none;
+}
+
+.log-item {
+    font-size: 0.82rem;
+    padding: 0.45rem 0.6rem;
+    margin-bottom: 0.4rem;
+    border-radius: 2px;
+    background-color: #ffffff;
+    border: 1px solid var(--azure-border);
+    border-left-width: 3px;
+    font-family: 'Segoe UI', Consolas, monospace;
+}
+
+.log-item.success { border-left-color: var(--azure-success); }
+.log-item.error { border-left-color: var(--azure-danger); }
+.log-item.info { border-left-color: var(--azure-info); }

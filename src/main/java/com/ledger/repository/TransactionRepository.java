@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findByType(TransactionType type);
+    List<Transaction> findByOwnerUsernameOrderByCreatedAtDesc(String ownerUsername);
 }

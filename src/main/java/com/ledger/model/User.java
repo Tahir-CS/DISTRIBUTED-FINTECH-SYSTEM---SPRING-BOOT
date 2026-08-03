@@ -1,6 +1,7 @@
 package com.ledger.model;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -18,4 +19,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Column(nullable = false, precision = 19, scale = 2)
+    private BigDecimal balance = BigDecimal.ZERO;
 }

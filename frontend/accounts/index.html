@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinCore Enterprise Ledger Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- WebSocket Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+    <!-- Enterprise Portal Header Bar -->
+    <header class="azure-header">
+        <div class="azure-brand">
+            <svg class="azure-logo" viewBox="0 0 96 96" width="20" height="20">
+                <path fill="#0078D4" d="M32.5 12h27.8l20.4 56.4H53.5z"/>
+                <path fill="#50E6FF" d="M15.3 68.4L37.1 24.9 50.4 50.8 28.5 68.4z"/>
+            </svg>
+            <span class="azure-portal-title">FinCore Platform</span>
+            <span class="azure-divider">|</span>
+            <span class="azure-service-name">Wallet Management Service</span>
+        </div>
+        <div class="azure-user-bar">
+            <span class="azure-tenant">Environment: Production-East</span>
+            <div class="azure-avatar">
+                <span id="currentUser">Alice</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Enterprise Breadcrumb Bar -->
+    <nav class="azure-breadcrumbs">
+        <span>Home</span> &gt; <span>Financial Services</span> &gt; <span>Ledger Group</span> &gt; <strong>Wallet Service</strong>
+    </nav>
+
+    <main class="dashboard-wrapper">
+        <!-- Account Summary Cards (Azure Resource Metric Cards) -->
+        <section class="account-hero-container">
+            <div class="account-hero-card sender-card">
+                <div class="card-status-badge active">RESOURCE: ACTIVE</div>
+                <div class="account-info">
+                    <span class="account-label">PRIMARY ACCOUNT (IDENTITY)</span>
+                    <h1 class="account-username" id="accountUsername">alice</h1>
+                </div>
+                <div class="balance-display">
+                    <span class="balance-label">Your Balance</span>
+                    <div class="balance-amount">$<span id="currentBalance">0.00</span> <span class="currency">USD</span></div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <div class="dashboard">
+            <!-- Transfer Panel -->
+            <section class="panel transfer-panel">
+                <div class="panel-header">
+                    <h2>Execute Transaction</h2>
+                    <span class="azure-blade-sub">Configure and dispatch atomic ledger entry</span>
+                </div>
+                <form id="transferForm">
+                    
+                    <div class="form-group">
+                        <label for="toUsername">Destination Account</label>
+                        <select id="toUsername" class="select-input" required>
+                            <option value="" disabled selected>-- Select Recipient Account --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Transaction Amount (USD)</label>
+                        <input type="number" step="0.01" id="amount" placeholder="0.00" min="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Audit Memo / Note</label>
+                        <input type="text" id="description" placeholder="Optional audit memo...">
+                    </div>
+
+                    <div class="azure-btn-group">
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zm3.5 7.5h-3v-3a.5.5 0 00-1 0v3h-3a.5.5 0 000 1h3v3a.5.5 0 001 0v-3h3a.5.5 0 000-1z"/></svg>
+                            Authorize Payment
+                        </button>
+                        <button type="button" class="btn-secondary-attack" id="attackBtn" style="margin-left: 10px; background-color: #f59e0b; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                            Simulate 5 Concurrent Requests
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Status Panel & Logs -->
+            <section class="panel status-panel">
+                <!-- Card 2: Recent Transactions (Ledger) -->
+                <div class="azure-card" style="margin-bottom: 20px;">
+                    <div class="azure-card-header">
+                        <h2 class="azure-card-title">Recent Transactions</h2>
+                        <span class="azure-badge">Live Ledger</span>
+                    </div>
+                    <div class="azure-table-container">
+                        <table class="azure-table">
+                            <thead>
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactionTableBody">
+                                <!-- Transactions will be populated here -->
+                                <tr><td colspan="4" style="text-align: center; color: #64748b; padding: 2rem;">No recent transactions</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="metrics" style="margin-bottom: 20px;">
+                    <div class="metric-card">
+                        <span class="metric-title">COMMITTED (200 OK)</span>
+                        <span class="metric-value success-text" id="successCount">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-title">BLOCKED (400 REJECTED)</span>
+                        <span class="metric-value danger-text" id="failCount">0</span>
+                    </div>
+                </div>
+
+                <div class="log-container">
+                    <h3>Transaction Telemetry Log</h3>
+                    <ul id="logList" class="log-list">
+                        <li class="log-item info">[System] FinCore Service Online. Database initial state ready.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

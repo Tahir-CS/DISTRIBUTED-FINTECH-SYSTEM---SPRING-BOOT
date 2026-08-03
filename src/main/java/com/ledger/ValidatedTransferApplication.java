@@ -3,8 +3,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SecureWalletApplication {
+public class ValidatedTransferApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SecureWalletApplication.class, args);
+        SpringApplication.run(ValidatedTransferApplication.class, args);
     }
 }
