@@ -16,6 +16,7 @@ public class TransferController {
         this.transferService = transferService;
     }
 
+    @com.ledger.annotation.Idempotent
     @PostMapping("/transfers")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, String> transfer(@Valid @RequestBody TransferRequest request, org.springframework.security.core.Authentication auth) {

@@ -4,6 +4,7 @@ com\ledger\repository\UserRepository.class
 com\ledger\controller\TransactionController.class
 com\ledger\config\WebSocketConfig.class
 com\ledger\model\TransactionType.class
+com\ledger\aspect\IdempotencyAspect.class
 com\ledger\repository\TransactionRepository.class
 com\ledger\service\AuthService.class
 com\ledger\dto\LoginRequest.class
@@ -18,6 +19,7 @@ com\ledger\dto\TransferRequest.class
 com\ledger\controller\TransferController.class
 com\ledger\security\CustomUserDetailsService.class
 com\ledger\service\TransferService.class
+com\ledger\annotation\Idempotent.class
 com\ledger\service\TransactionService.class
 com\ledger\security\JwtAuthFilter.class
 com\ledger\exception\InsufficientFundsException.class

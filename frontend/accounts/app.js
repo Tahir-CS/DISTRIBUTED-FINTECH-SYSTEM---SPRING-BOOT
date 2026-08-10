@@ -173,11 +173,14 @@ document.getElementById('transferForm').addEventListener('submit', async (e) => 
     };
 
     try {
+        const idempotencyKey = crypto.randomUUID();
+
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${jwtToken}`
+                'Authorization': `Bearer ${jwtToken}`,
+                'Idempotency-Key': idempotencyKey
             },
             body: JSON.stringify(payload)
         });
@@ -266,5 +269,67 @@ document.getElementById('attackBtn').addEventListener('click', async () => {
 
     } catch (error) {
         addLog(`Network Error during race condition test`, 'error');
+    }
+});
+
+// UI Idempotency Simulation (Fires 2 Requests with the EXACT Same UUID)
+document.getElementById('duplicateBtn')?.addEventListener('click', async () => {
+    if (!jwtToken) {
+        addLog(`Auth Error: JWT Token not ready yet.`, 'error');
+        return;
+    }
+
+    const recipient = document.getElementById('toUsername').value || 'bob';
+    const amountVal = parseFloat(document.getElementById('amount').value) || 100.00;
+    
+    const payload = {
+        toUsername: recipient,
+        amount: amountVal,
+        description: "Idempotent Retry Test"
+    };
+
+    // GENERATE ONE KEY TO SHARE ACROSS BOTH REQUESTS
+    const sharedIdempotencyKey = crypto.randomUUID();
+
+    addLog(`FIRING 2 REQUESTS WITH EXACT SAME KEY: ${sharedIdempotencyKey}...`, 'info');
+
+    const makeRequest = () => fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwtToken}`,
+            'Idempotency-Key': sharedIdempotencyKey
+        },
+        body: JSON.stringify(payload)
+    });
+
+    try {
+        // Send first request
+        const res1 = await makeRequest();
+        if (res1.ok) {
+            successCount++;
+            document.getElementById('successCount').textContent = successCount;
+            addLog(`[Req #1] Transfer SUCCESSFUL (200 OK)`, 'success');
+        }
+
+        // Wait 1 second
+        addLog(`Waiting 1 second before retrying...`, 'info');
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Send SECOND identical request
+        addLog(`Sending Duplicate Request with same key...`, 'warning');
+        const res2 = await makeRequest();
+        
+        if (res2.ok) {
+            // Technically it's a 200 OK because idempotency returns the cached success!
+            addLog(`[Req #2] Idempotency Intercepted! Returned cached success. Database NOT hit.`, 'success');
+        } else {
+            addLog(`[Req #2] Failed`, 'error');
+        }
+
+        fetchBalance();
+
+    } catch (error) {
+        addLog(`Network Error during idempotency test`, 'error');
     }
 });
